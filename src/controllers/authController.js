@@ -1,7 +1,7 @@
 import createHttpError from "http-errors";
 import bcrypt from "bcrypt";
 import { User } from "../models/user.js";
-import { createSession, setCookies } from "../services/auth.js";
+import { createSession, setSessionCookies } from "../services/auth.js";
 import { Session } from "../models/session.js";
 
 export const registerUser = async (req, res) => {
@@ -21,7 +21,7 @@ export const registerUser = async (req, res) => {
 
   const newSession = await createSession(newUser._id);
 
-  setCookies(res, newSession);
+  setSessionCookies(res, newSession);
 
   res.status(201).json(newUser);
 };
@@ -41,7 +41,7 @@ export const loginUser = async (req, res) => {
 
   const newSession = await createSession(user._id);
 
-  setCookies(res, newSession);
+  setSessionCookies(res, newSession);
 
   res.status(200).json(user);
 };
