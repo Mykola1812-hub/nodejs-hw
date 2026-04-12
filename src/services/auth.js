@@ -4,14 +4,14 @@ import { Session } from "../models/session.js";
 export const createSession = async (userId) => {
   return Session.create({
     userId,
-    accessToken: crypto.randomUUID(),
-    refreshToken: crypto.randomUUID(),
+    accessToken: crypto.randomBytes(),
+    refreshToken: crypto.randomBytes(),
     accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
     refreshTokenValidUntil: new Date(Date.now() + ONE_DAY),
   });
 };
 
-export const setCookies = async (res, session) => {
+export const setSessionCookies = (res, session) => {
   res.cookie("accessToken", session.accessToken, {
     httpOnly: true,
     secure: true,

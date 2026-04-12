@@ -6,7 +6,8 @@ import { authenticate } from '../middleware/authenticate.js';
 
 const router = Router();
 
-router.get('/notes', celebrate(getAllNotesSchema), getAllNotes, authenticate);
+router.use('/notes', authenticate);
+router.get('/notes', celebrate(getAllNotesSchema), getAllNotes);
 router.get('/notes/:noteId', celebrate(noteIdSchema) ,getNoteById);
 router.post('/notes', celebrate(createNoteSchema),createNote);
 router.delete('/notes/:noteId', celebrate(noteIdSchema) ,deleteNote);
