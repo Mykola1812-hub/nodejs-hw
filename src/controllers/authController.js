@@ -20,18 +20,9 @@ export const registerUser = async (req, res) => {
   });
 
   const newSession = await createSession(newUser._id);
-
   setSessionCookies(res, newSession);
 
-  res.status(201).json({
-    message: 'Successfully registered a user',
-    data: {
-      user: {
-        _id: newUser._id,
-        email: newUser.email,
-      },
-    },
-  });
+  res.status(201).json(newUser);
 };
 
 export const loginUser = async (req, res) => {
@@ -50,18 +41,9 @@ export const loginUser = async (req, res) => {
   await Session.deleteMany({ userId: user._id });
 
   const newSession = await createSession(user._id);
-
   setSessionCookies(res, newSession);
 
-  res.status(200).json({
-    message: 'Successfully logged in',
-    data: {
-      user: {
-        _id: user._id,
-        email: user.email,
-      },
-    },
-  });
+  res.status(200).json(user);
 };
 
 export const refreshUserSession = async (req, res) => {
@@ -88,7 +70,6 @@ export const refreshUserSession = async (req, res) => {
   await Session.deleteOne({ _id: session._id });
 
   const newSession = await createSession(session.userId);
-
   setSessionCookies(res, newSession);
 
   res.status(200).json({
