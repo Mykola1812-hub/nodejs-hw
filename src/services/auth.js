@@ -1,6 +1,6 @@
 import { FIFTEEN_MINUTES, ONE_DAY } from "../constants/time.js";
 import { Session } from "../models/session.js";
-import { crypto } from "crypto";
+import crypto from "crypto";
 
 export const createSession = async (userId) => {
   return Session.create({
